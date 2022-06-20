@@ -17,53 +17,48 @@ public class Solution {
 	}
 
     public int[] solution(int[] progresses, int[] speeds) {
-        int[] answer = {};
-        
     	Queue<Integer> worktime = new LinkedList<Integer>();
-    	
+
+		// 작업 완료하는 데에 걸리는 일수 계산: (100 - 작업 진도) / 작업 속도
     	for (int i = 0; i < progresses.length; i++) {
     		int time = (100 - progresses[i]) / speeds[i];
-    		
+
+			// 나머지가 있으면 일수 + 1
     		if ((100 - progresses[i]) % speeds[i] != 0) {
     			time++;
     		}
     		worktime.add(time);
     	}
-    	
-    	// [5, 10, 1, 1, 20, 1]
-    	
-    	List<Integer> result = new ArrayList<Integer>();
-    	
-    	int prevWork = worktime.poll();
-    	
-    	result = calcNextWork(prevWork, worktime);
-    	
-    	// TODO
+
+    	List<Integer> result = calcNextWork(worktime);
+
+    	int[] answer = result.stream().mapToInt(i->i).toArray();
     	
         return answer;
     }
     
-    public List<Integer> calcNextWork(int newWork, Queue<Integer> newWorktime) {
-    	Queue<Integer> worktime = newWorktime;
-    	
-    	List<Integer> result = new ArrayList<Integer>();
-    	
-    	// prevWork = 5
-    	int prevWork = newWork;
-    	
-    	while (!worktime.isEmpty()) {
-    		int total = 0;
-    		int nextWork = worktime.poll();
+    public List<Integer> calcNextWork(Queue<Integer> worktime) {
+		List<Integer> result = new ArrayList<Integer>();
 
-    		if (prevWork < nextWork) {
-    			total++;
-    			
-    		} else {
-    			// TODO
-    		}
-    		
-    		result.add(total);
-    	}
+		// prevWork: 비교할 때 기준이 되는 일수
+		int prevWork = worktime.poll();
+		int cnt = 1;
+
+    	while (!worktime.isEmpty()) {
+			int nextWork = worktime.peek();
+
+			if (prevWork < nextWork) {
+				result.add(cnt);
+				cnt = 1;
+
+				prevWork = worktime.poll();
+
+			} else {
+				worktime.poll();
+				cnt++;
+			}
+		}
+		result.add(cnt);
     	
 		return result;
     }
