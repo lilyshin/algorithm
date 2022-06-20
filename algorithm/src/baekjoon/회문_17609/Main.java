@@ -15,49 +15,49 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
 
         for (int i = 0; i < n; i++) {
-            bw.append(String.valueOf(isPalindrome(br.readLine()))+System.lineSeparator());
+            String word = br.readLine();
+            int result = 0;
+
+            int head = 0;
+            int tail = word.length() - 1;
+
+            while (head < tail) {
+                if (word.charAt(head) == word.charAt(tail)) {
+                    head++;
+                    tail--;
+
+                } else if (isPalindrome(word.substring(head, tail))) {
+                    result = 1;
+                    break;
+
+                } else if (isPalindrome(word.substring(head + 1, tail + 1))) {
+                    result = 1;
+                    break;
+
+                } else {
+                    result = 2;
+                    break;
+                }
+            }
+            System.out.println(result);
         }
 
-        bw.close();
         br.close();
     }
 
-    // 반례 :
-    // 1
-    // baaba
-    // TODO 메모리 초과
-    public int isPalindrome(String word) {
+    public boolean isPalindrome(String word) {
         int head = 0;
         int tail = word.length() - 1;
 
-        int result = 0;
-
         while (head < tail) {
-            int headChar = word.charAt(head);
-            int tailChar = word.charAt(tail);
-
             if (word.charAt(head) == word.charAt(tail)) {
                 head++;
                 tail--;
-
             } else {
-                if (isPalindrome(word.substring(head, tail)) == 0) {
-                    return 1;
-                } else {
-                    if ((head + 1) != tail && word.charAt(head + 1) == word.charAt(tail)) {
-                        head++;
-
-                    } else if (head != (tail - 1) && word.charAt(tail - 1) == word.charAt(head)) {
-                        tail--;
-
-                    } else {
-                        return 2;
-                    }
-
-                    result = 1;
-                }
+                return false;
             }
         }
-        return result;
+        return true;
     }
+
 }
