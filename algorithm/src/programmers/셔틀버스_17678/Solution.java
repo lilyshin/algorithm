@@ -130,7 +130,6 @@ public class Solution {
     }
 
     class Employee {
-        List<LocalTime> orgTimeTable = new ArrayList<>();
         List<LocalTime> timeTable = new ArrayList<>();
 
         public List<LocalTime> getTimeTable() {
@@ -146,16 +145,6 @@ public class Solution {
                 LocalTime localTime = LocalTime.parse(tTable.get(i));
                 this.timeTable.add(localTime);
             }
-
-            this.orgTimeTable = new ArrayList<>(this.timeTable);
-        }
-
-        public List<LocalTime> getOrgTimeTable() {
-            return orgTimeTable;
-        }
-
-        public void setOrgTimeTable(List<LocalTime> orgTimeTable) {
-            this.orgTimeTable = orgTimeTable;
         }
 
         public void setTimeTable(List<LocalTime> timeTable) {
