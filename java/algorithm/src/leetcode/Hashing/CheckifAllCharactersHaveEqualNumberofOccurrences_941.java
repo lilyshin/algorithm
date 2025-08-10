@@ -2,8 +2,6 @@ package leetcode.Hashing;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Objects;
 
 /*
 Problem:
@@ -67,12 +65,17 @@ public class CheckifAllCharactersHaveEqualNumberofOccurrences_941 {
             map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
         }
 
-        int compareNum = map.values().iterator().next();
+        HashSet<Integer> set = new HashSet<>(map.values());
+        return set.size() == 1;
+        // values = 2, 3, 2
+        /*int compareNum = map.values().iterator().next();
+        // refactor: hashSet
+        HashSet<Character> set = new HashSet<>();
         for (int num : map.values()) {
             if (compareNum != num) {
                 return false;
             }
         }
-        return true;
+        return true;*/
     }
 }
